@@ -5,17 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Stallings Family Getaway &middot; July 6–8, 2026</title>
+<!-- build: fluid-stacked-v3 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
 <style>
+  /*
+   * Fluid type system: every size is clamp(MIN @ ~360px phone, fluid, MAX @ desktop).
+   * Desktop values are unchanged from the approved layout; phones get a readable
+   * floor; tablets/laptops interpolate smoothly — no breakpoint jumps.
+   * The ≤640px block additionally STACKS the timeline (time label above the entry)
+   * so titles get the full screen width instead of being squeezed by a side column.
+   */
   * { box-sizing: border-box; }
   body { margin: 0; }
 
   /* ===== Layout ===== */
   .backdrop {
     background: #E9DEC6;
-    padding: 32px;
+    padding: clamp(0px, calc(-34.6px + 7.21vw), 32px);
     min-height: 100vh;
     font-family: 'Nunito Sans', system-ui, sans-serif;
   }
@@ -24,61 +32,61 @@
     max-width: 860px;
     margin: 0 auto;
     background: #F5EEDC;
-    padding: 52px 56px 44px;
+    padding: clamp(24px, calc(4px + 5.6vw), 52px) clamp(18px, calc(-9.14px + 7.24vw), 56px) clamp(30px, calc(20px + 2.67vw), 44px);
     box-shadow: 0 18px 50px rgba(44,40,33,0.16);
     color: #322E27;
   }
 
   /* ===== Header ===== */
-  .header { text-align: center; padding-bottom: 26px; border-bottom: 2px solid rgba(50,46,39,0.16); }
-  .eyebrow { font-size: 19.5px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: #3C5A44; }
-  .address { font-size: 19px; font-weight: 600; color: #857B6B; margin-top: 5px; }
-  .hero-title { font-family: 'Bitter', serif; font-weight: 700; font-size: 60px; line-height: 1.05; margin: 12px 0 16px; color: #2C4331; letter-spacing: -0.01em; }
-  .hero-date { display: inline-flex; align-items: center; gap: 16px; font-family: 'Bitter', serif; font-weight: 700; font-size: 39px; color: #BE5A2C; }
+  .header { text-align: center; padding-bottom: clamp(18px, 2.8vw, 26px); border-bottom: 2px solid rgba(50,46,39,0.16); }
+  .eyebrow { font-size: clamp(12.5px, calc(7.5px + 1.33vw), 19.5px); font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: #3C5A44; }
+  .address { font-size: clamp(12.5px, calc(7.86px + 1.24vw), 19px); font-weight: 600; color: #857B6B; margin-top: 5px; }
+  .hero-title { font-family: 'Bitter', serif; font-weight: 700; font-size: clamp(31px, calc(10.29px + 5.52vw), 60px); line-height: 1.06; margin: 12px 0 14px; color: #2C4331; letter-spacing: -0.01em; text-wrap: balance; }
+  .hero-date { display: inline-flex; align-items: center; gap: 16px; font-family: 'Bitter', serif; font-weight: 700; font-size: clamp(14px, calc(-3.86px + 4.76vw), 39px); color: #BE5A2C; }
   .rule { width: 32px; height: 3px; background: #BE5A2C; display: inline-block; }
 
   /* ===== Safety notes ===== */
   .safety-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
   .safety-card { background: rgba(190,90,44,0.10); border: 1px solid rgba(190,90,44,0.35); border-radius: 11px; padding: 15px 18px; }
-  .safety-title { font-family: 'Bitter', serif; font-weight: 700; font-size: 19.5px; color: #BE5A2C; margin-bottom: 4px; }
-  .safety-body { font-size: 17.5px; line-height: 1.55; color: #4A443B; }
+  .safety-title { font-family: 'Bitter', serif; font-weight: 700; font-size: clamp(14.5px, calc(10.93px + 0.95vw), 19.5px); color: #BE5A2C; margin-bottom: 4px; }
+  .safety-body { font-size: clamp(13.5px, calc(10.64px + 0.76vw), 17.5px); line-height: 1.55; color: #4A443B; }
 
   /* ===== Day headers ===== */
-  .day { display: flex; align-items: baseline; justify-content: space-between; background: #3C5A44; color: #F5EEDC; border-radius: 11px; padding: 13px 22px; margin: 32px 0 20px; }
-  .day-name { font-family: 'Bitter', serif; font-weight: 700; font-size: 27.5px; }
-  .day-meta { font-weight: 700; font-size: 15.5px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.82; }
+  .day { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; background: #3C5A44; color: #F5EEDC; border-radius: 11px; padding: 13px 22px; margin: 32px 0 20px; }
+  .day-name { font-family: 'Bitter', serif; font-weight: 700; font-size: clamp(19px, calc(12.93px + 1.62vw), 27.5px); }
+  .day-meta { font-weight: 700; font-size: clamp(10.5px, calc(6.93px + 0.95vw), 15.5px); letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.82; white-space: nowrap; }
 
   /* ===== Timeline ===== */
-  .timeline { display: grid; grid-template-columns: 112px 1fr; }
-  .time { text-align: right; padding: 1px 18px 0 0; font-weight: 800; font-size: 16.5px; color: #2C4331; }
+  .timeline { display: grid; grid-template-columns: clamp(78px, calc(53.71px + 6.48vw), 112px) 1fr; }
+  .time { text-align: right; padding: 1px 18px 0 0; font-weight: 800; font-size: clamp(12.5px, calc(9.64px + 0.76vw), 16.5px); color: #2C4331; }
   .time--accent { color: #BE5A2C; }
   .event { position: relative; border-left: 2px solid rgba(60,90,68,0.28); padding: 0 0 22px 24px; }
   .timeline .event:last-child { padding-bottom: 6px; }
-  .dot { position: absolute; left: -7px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: #BE5A2C; box-shadow: 0 0 0 4px #F5EEDC; }
-  .event-title { font-family: 'Bitter', serif; font-weight: 600; font-size: 22px; }
+  .dot { position: absolute; left: -7px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: #BE5A2C; box-shadow: 0 0 0 4px #F5EEDC; }
+  .event-title { font-family: 'Bitter', serif; font-weight: 600; font-size: clamp(16px, calc(11.71px + 1.14vw), 22px); line-height: 1.25; }
   .event-title--accent { color: #BE5A2C; }
-  .event-sub { font-size: 18px; color: #857B6B; margin-top: 3px; line-height: 1.6; }
-  .by { font-family: 'Nunito Sans', sans-serif; font-weight: 700; font-size: 18px; color: #BE5A2C; }
-  .note-muted { font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: 18px; color: #857B6B; }
+  .event-sub { font-size: clamp(14px, calc(11.14px + 0.76vw), 18px); color: #857B6B; margin-top: 3px; line-height: 1.55; }
+  .by { font-family: 'Nunito Sans', sans-serif; font-weight: 700; font-size: clamp(14px, calc(11.14px + 0.76vw), 18px); color: #BE5A2C; }
+  .note-muted { font-family: 'Nunito Sans', sans-serif; font-weight: 600; font-size: clamp(14px, calc(11.14px + 0.76vw), 18px); color: #857B6B; }
 
   /* ===== Reference row ===== */
   .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 38px; padding-top: 30px; border-top: 2px solid rgba(50,46,39,0.16); }
-  .section-title { font-family: 'Bitter', serif; font-weight: 700; font-size: 23.5px; color: #2C4331; margin-bottom: 14px; }
-  .bring { display: grid; grid-template-columns: 1fr; gap: 9px; font-size: 17.5px; line-height: 1.4; color: #4A443B; }
+  .section-title { font-family: 'Bitter', serif; font-weight: 700; font-size: clamp(17px, calc(12.36px + 1.24vw), 23.5px); color: #2C4331; margin-bottom: 14px; }
+  .bring { display: grid; grid-template-columns: 1fr; gap: 9px; font-size: clamp(14px, calc(11.5px + 0.67vw), 17.5px); line-height: 1.4; color: #4A443B; }
   .bring-item { display: flex; gap: 10px; }
   .checkbox { flex: 0 0 15px; height: 15px; border: 2px solid #3C5A44; border-radius: 4px; margin-top: 1px; }
   .info-card { background: #FCF8EE; border: 1px solid rgba(50,46,39,0.12); border-radius: 10px; padding: 13px 15px; margin-bottom: 12px; }
   .info-card:last-child { margin-bottom: 0; }
-  .info-title { font-family: 'Bitter', serif; font-weight: 700; font-size: 19px; color: #322E27; }
-  .info-note { font-weight: 600; font-size: 15.5px; color: #857B6B; }
-  .info-line { font-size: 17px; color: #6C6456; line-height: 1.55; margin-top: 3px; }
-  .info-detail { font-size: 16.5px; color: #4A443B; line-height: 1.7; margin-top: 6px; }
-  .info-highlight { font-size: 16.5px; color: #BE5A2C; font-weight: 700; margin-top: 5px; }
+  .info-title { font-family: 'Bitter', serif; font-weight: 700; font-size: clamp(14.5px, calc(11.29px + 0.86vw), 19px); color: #322E27; }
+  .info-note { font-weight: 600; font-size: clamp(11.5px, calc(8.64px + 0.76vw), 15.5px); color: #857B6B; }
+  .info-line { font-size: clamp(13px, calc(10.14px + 0.76vw), 17px); color: #6C6456; line-height: 1.55; margin-top: 3px; }
+  .info-detail { font-size: clamp(12.5px, calc(9.64px + 0.76vw), 16.5px); color: #4A443B; line-height: 1.7; margin-top: 6px; }
+  .info-highlight { font-size: clamp(12.5px, calc(9.64px + 0.76vw), 16.5px); color: #BE5A2C; font-weight: 700; margin-top: 5px; }
 
   /* ===== Closing note ===== */
   .closing { margin-top: 30px; background: rgba(190,90,44,0.10); border: 1px solid rgba(190,90,44,0.30); border-radius: 12px; padding: 22px 26px; text-align: center; }
-  .closing-title { font-family: 'Bitter', serif; font-weight: 700; font-size: 22px; color: #BE5A2C; margin-bottom: 6px; }
-  .closing-body { font-size: 19.5px; line-height: 1.65; color: #4A443B; max-width: 620px; margin: 0 auto; }
+  .closing-title { font-family: 'Bitter', serif; font-weight: 700; font-size: clamp(16px, calc(11.71px + 1.14vw), 22px); color: #BE5A2C; margin-bottom: 6px; }
+  .closing-body { font-size: clamp(14px, calc(10.07px + 1.05vw), 19.5px); line-height: 1.6; color: #4A443B; max-width: 620px; margin: 0 auto; text-wrap: pretty; }
 
   /* ===== Print ===== */
   @media print {
@@ -86,48 +94,33 @@
     .sheet { box-shadow: none; max-width: 100%; }
   }
 
-  /* ===== Mobile (phones) ===== */
+  /* ===== Phones: full-bleed + stacked timeline ===== */
   @media (max-width: 640px) {
-    .backdrop { padding: 0; min-height: 0; }
-    .sheet { max-width: 100%; padding: 24px 18px 30px; box-shadow: none; }
+    .sheet { box-shadow: none; }
 
-    .header { padding-bottom: 18px; }
-    .eyebrow { font-size: 12.5px; letter-spacing: 0.14em; }
-    .address { font-size: 12.5px; }
-    .hero-title { font-size: 33px; line-height: 1.08; margin: 8px 0 12px; }
-    .hero-date { font-size: 16px; gap: 0; }
+    .hero-date { gap: 0; white-space: nowrap; }
     .rule { display: none; }
 
     .safety-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 18px; }
-    .safety-card { padding: 13px 15px; }
-    .safety-title { font-size: 14.5px; }
-    .safety-body { font-size: 13.5px; }
 
-    .day { padding: 11px 16px; margin: 26px 0 14px; }
-    .day-name { font-size: 19px; }
-    .day-meta { font-size: 10.5px; letter-spacing: 0.12em; }
-
-    .timeline { grid-template-columns: 78px 1fr; }
-    .time { padding: 1px 8px 0 0; font-size: 12.5px; }
-    .event { padding: 0 0 18px 16px; }
-    .event-title { font-size: 16.5px; }
-    .event-sub { font-size: 14px; }
-    .by { font-size: 14px; }
-    .note-muted { font-size: 14px; }
+    /* Stack the timeline: time becomes a label above each entry, so the
+       title + subtitle get the full width of the screen. The vertical line
+       runs through both the time label and the entry for continuity. */
+    .timeline { grid-template-columns: 1fr; }
+    .time {
+      text-align: left;
+      border-left: 2px solid rgba(60,90,68,0.28);
+      padding: 13px 0 0 24px;
+      letter-spacing: 0.04em;
+    }
+    .event { padding: 0 0 4px 24px; }
+    .timeline .event:last-child { padding-bottom: 4px; }
+    .dot { top: 3px; }
 
     .ref-grid { grid-template-columns: 1fr; gap: 24px; margin-top: 26px; padding-top: 22px; }
-    .section-title { font-size: 17px; margin-bottom: 10px; }
-    .bring { font-size: 14px; gap: 8px; }
-    .checkbox { flex-basis: 14px; height: 14px; }
-    .info-title { font-size: 14.5px; }
-    .info-note { font-size: 11.5px; }
-    .info-line { font-size: 13px; }
-    .info-detail { font-size: 12.5px; }
-    .info-highlight { font-size: 12.5px; }
 
-    .closing { padding: 18px 18px; margin-top: 24px; }
-    .closing-title { font-size: 16px; }
-    .closing-body { font-size: 14px; max-width: none; }
+    .closing { margin-top: 24px; padding: 18px 18px; }
+    .closing-body { max-width: none; }
   }
 </style>
 </head>
