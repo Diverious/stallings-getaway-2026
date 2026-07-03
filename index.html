@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Stallings Family Getaway &middot; July 6–8, 2026</title>
-<!-- build: fluid-stacked-v7 -->
+<!-- build: fluid-stacked-v8 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
@@ -96,6 +96,19 @@
   .closing-title { font-family: 'Bitter', serif; font-weight: 700; font-size: clamp(18px, calc(15.14px + 0.76vw), 22px); color: #BE5A2C; margin-bottom: 6px; }
   .closing-body { font-size: clamp(16px, calc(13.5px + 0.67vw), 19.5px); line-height: 1.6; color: #4A443B; max-width: 620px; margin: 0 auto; text-wrap: pretty; }
 
+  /* ===== Photos ===== */
+  .hero-photo { margin-top: 22px; position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(50,46,39,0.12); box-shadow: 0 10px 26px rgba(44,40,33,0.14); }
+  .hero-photo img { display: block; width: 100%; height: clamp(200px, 30vw, 300px); object-fit: cover; object-position: 50% 45%; }
+  .hero-photo .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 32px 18px 12px; background: linear-gradient(transparent, rgba(28,25,19,0.62)); color: #F5EEDC; font-weight: 700; font-size: clamp(12.5px, calc(10px + 0.7vw), 15px); letter-spacing: 0.03em; }
+  .memories { margin-top: 36px; padding-top: 30px; border-top: 2px solid rgba(50,46,39,0.16); }
+  .memories-intro { font-size: clamp(15px, calc(12.5px + 0.67vw), 18px); color: #6C6456; line-height: 1.5; margin: -4px 0 16px; }
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .photo-card { margin: 0; }
+  .photo-card img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; border: 1px solid rgba(50,46,39,0.12); box-shadow: 0 5px 16px rgba(44,40,33,0.12); }
+  .photo-card figcaption { font-size: clamp(12.5px, calc(11px + 0.4vw), 14px); color: #857B6B; font-weight: 600; margin-top: 7px; text-align: center; }
+  .credit { margin-top: 16px; font-size: clamp(11px, calc(10px + 0.27vw), 12.5px); color: #A79C88; text-align: center; }
+  .credit a { color: inherit; }
+
   /* ===== Print ===== */
   @media print {
     .backdrop { padding: 0; background: #F5EEDC; min-height: 0; }
@@ -127,6 +140,9 @@
 
     .ref-grid { grid-template-columns: 1fr; gap: 24px; margin-top: 26px; padding-top: 22px; }
 
+    .hero-photo img { height: clamp(200px, 56vw, 260px); }
+    .memories { margin-top: 26px; padding-top: 22px; }
+    .gallery { grid-template-columns: 1fr; gap: 12px; }
     .closing { margin-top: 24px; padding: 18px 18px; }
     .closing-body { max-width: none; }
   }
@@ -147,6 +163,12 @@
       Monday – Wednesday, July 6 – 8, 2026
       <span class="rule"></span>
     </div>
+  </div>
+
+  <!-- ===== HERO PHOTO ===== -->
+  <div class="hero-photo">
+    <img src="photos/park-hero.jpg" width="1600" height="1067" alt="Footbridge over the lagoon at William C. Sterling State Park on Lake Erie">
+    <div class="cap">William C. Sterling State Park · Lake Erie · Monroe, MI</div>
   </div>
 
   <!-- ===== SAFETY NOTES ===== -->
@@ -298,11 +320,33 @@
     </div>
   </div>
 
+  <!-- ===== MEMORIES ===== -->
+  <div class="memories">
+    <div class="section-title">📸 &nbsp;Last Time at Sterling</div>
+    <div class="memories-intro">A few favorites from our last trip — here’s to making a whole lot more together.</div>
+    <div class="gallery">
+      <figure class="photo-card">
+        <img src="photos/beach.jpg" width="1400" height="1050" loading="lazy" alt="Family playing on the Lake Erie beach with floats and beach chairs">
+        <figcaption>Beach day on Lake Erie</figcaption>
+      </figure>
+      <figure class="photo-card">
+        <img src="photos/checkers.jpg" width="1400" height="1050" loading="lazy" alt="Family playing giant checkers under the canopy at the campground">
+        <figcaption>Giant checkers under the canopy</figcaption>
+      </figure>
+      <figure class="photo-card">
+        <img src="photos/campfire.jpg" width="1400" height="1050" loading="lazy" alt="Kids and grandparents together near the campfire ring">
+        <figcaption>Games &amp; campfire with the crew</figcaption>
+      </figure>
+    </div>
+  </div>
+
   <!-- ===== CLOSING NOTE ===== -->
   <div class="closing">
     <div class="closing-title">❤️ &nbsp;Most Important of All</div>
     <div class="closing-body">If you’re working, please consider taking one day off and spending <strong style="color: #322E27;">Tuesday</strong> with us. Let’s relax, laugh, make memories, and enjoy being together. Looking forward to a wonderful few days with family!</div>
   </div>
+
+  <div class="credit">Park photo by <a href="https://commons.wikimedia.org/wiki/File:Sterling_State_Park_Michigan_pedestrian_bridge_over_lagoon.JPG" target="_blank" rel="noopener">Dwight Burdette</a>, <a href="https://creativecommons.org/licenses/by/3.0" target="_blank" rel="noopener">CC BY 3.0</a>.</div>
 
 </div>
 </div>
