@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#BE5A2C">
+<title>Campfire Songbook &middot; Stallings Family Getaway</title>
+<!-- build: songbook-v1 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  /*
+   * Campfire Songbook — sibling of the itinerary (index.html).
+   * Same Bitter + Nunito Sans pairing and parchment/green/ember palette,
+   * set by firelight: a warm ember glow rises from below + faint paper grain.
+   * Lyrics are typeset to teach the song — echoes, choruses, actions, shouts,
+   * and the three-group round each get their own visual voice.
+   * Type is oversized and high-contrast for reading around a fire (many 70+).
+   */
+  :root{
+    --backdrop:#E9DEC6;
+    --parchment:#F5EEDC;
+    --card:#FCF8EE;
+    --ink:#322E27;
+    --ink-soft:#4A443B;
+    --green:#3C5A44;
+    --green-deep:#2C4331;
+    --ember:#BE5A2C;
+    --ember-bright:#E07A3A;
+    --muted:#857B6B;
+    --muted-2:#6C6456;
+    --line:rgba(50,46,39,0.16);
+  }
+  * { box-sizing:border-box; }
+  html{ scroll-behavior:smooth; scroll-padding-top:16px; }
+  body{ margin:0; }
+
+  /* ===== Firelight backdrop ===== */
+  .backdrop{
+    position:relative;
+    min-height:100vh;
+    padding: clamp(0px, calc(-34.6px + 7.21vw), 32px);
+    font-family:'Nunito Sans',system-ui,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(150% 95% at 50% 132%, rgba(224,122,58,0.42), rgba(224,122,58,0) 56%),
+      radial-gradient(120% 72% at 50% 120%, rgba(190,90,44,0.30), rgba(190,90,44,0) 60%),
+      var(--backdrop);
+    background-attachment: fixed;
+  }
+  .backdrop::before{ /* faint paper grain */
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ===== Sheet ===== */
+  .sheet{
+    position:relative; z-index:1;
+    width:100%; max-width:820px; margin:0 auto;
+    background:var(--parchment);
+    padding: clamp(24px, calc(4px + 5.6vw), 50px) clamp(18px, calc(-9.14px + 7.24vw), 50px) clamp(30px, calc(20px + 2.67vw), 46px);
+    box-shadow: 0 20px 60px rgba(44,40,33,0.22), 0 0 100px rgba(190,90,44,0.16);
+    border-radius:4px;
+    animation: rise .6s cubic-bezier(.2,.7,.2,1) both;
+  }
+
+  /* ===== Header ===== */
+  .top{ display:flex; justify-content:flex-start; margin-bottom:clamp(14px,3vw,22px); }
+  .back{
+    display:inline-flex; align-items:center; gap:8px;
+    font-weight:800; font-size:clamp(14px,calc(11.5px+0.67vw),17px);
+    color:var(--green-deep); text-decoration:none;
+    padding:9px 16px; border:1.5px solid rgba(60,90,68,0.5); border-radius:999px;
+    background:rgba(60,90,68,0.05); transition:all .15s ease;
+  }
+  .back:hover{ background:var(--green); color:var(--parchment); border-color:var(--green); }
+  .header{ text-align:center; padding-bottom:clamp(16px,2.6vw,24px); border-bottom:2px solid var(--line); }
+  .eyebrow{ font-size:clamp(13px,calc(9.5px+0.93vw),18px); font-weight:800; letter-spacing:0.18em; text-transform:uppercase; color:var(--green); }
+  .wordmark{
+    font-family:'Bitter',serif; font-weight:700; line-height:1.04;
+    font-size:clamp(34px,calc(14.7px+5.14vw),58px);
+    margin:10px 0 12px; color:var(--ember); letter-spacing:-0.01em; text-wrap:balance;
+    animation: emberGlow 5s ease-in-out infinite;
+  }
+  .subtitle{ font-size:clamp(16px,calc(13px+0.8vw),20px); font-weight:600; color:var(--muted-2); }
+
+  /* ===== Setlist (song index) ===== */
+  .setlist-wrap{ margin-top:clamp(22px,4vw,34px); }
+  .setlist-label{
+    font-family:'Nunito Sans',sans-serif; font-weight:800; text-transform:uppercase;
+    letter-spacing:0.14em; font-size:clamp(13px,calc(11px+0.4vw),15px); color:var(--green);
+    display:flex; align-items:center; gap:12px; margin-bottom:16px;
+  }
+  .setlist-label::before,.setlist-label::after{ content:""; height:2px; flex:1; background:var(--line); }
+  .toc{ display:grid; grid-template-columns:1fr; gap:11px; }
+  .toc-item{
+    display:flex; align-items:center; gap:15px;
+    min-height:62px; padding:12px 16px;
+    background:var(--card); border:1px solid var(--line); border-radius:13px;
+    text-decoration:none; color:var(--ink);
+    box-shadow:0 2px 6px rgba(44,40,33,0.05);
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
+    animation: rise .5s cubic-bezier(.2,.7,.2,1) both;
+    animation-delay: calc(var(--i,0) * 45ms + 120ms);
+  }
+  .toc-item:hover,.toc-item:focus-visible{
+    transform:translateY(-2px); border-color:var(--ember);
+    box-shadow:0 8px 22px rgba(190,90,44,0.18); background:var(--parchment); outline:none;
+  }
+  .toc-num{
+    flex:0 0 auto; width:38px; height:38px; border-radius:50%;
+    display:grid; place-items:center;
+    background:var(--ember); color:var(--parchment);
+    font-family:'Bitter',serif; font-weight:700; font-size:18px;
+    box-shadow:0 0 0 4px rgba(190,90,44,0.14);
+  }
+  .toc-text{ display:flex; flex-direction:column; gap:1px; min-width:0; }
+  .toc-name{ font-family:'Bitter',serif; font-weight:600; font-size:clamp(17px,calc(14.5px+0.67vw),20px); line-height:1.2; color:var(--green-deep); }
+  .toc-kind{ font-size:clamp(12px,calc(10.5px+0.4vw),13.5px); font-weight:700; color:var(--muted); letter-spacing:0.02em; }
+
+  /* ===== Songs ===== */
+  .songs{ margin-top:clamp(30px,5vw,44px); }
+  .song{
+    scroll-margin-top:16px;
+    padding-top:clamp(24px,4vw,34px); margin-top:clamp(24px,4vw,34px);
+    border-top:2px solid var(--line);
+  }
+  .song:first-child{ border-top:none; margin-top:0; }
+  .song-head{ display:flex; align-items:center; gap:15px; margin:0 0 clamp(14px,2.5vw,20px); }
+  .song-num{
+    flex:0 0 auto; width:clamp(40px,10vw,48px); height:clamp(40px,10vw,48px); border-radius:50%;
+    display:grid; place-items:center;
+    background:var(--green); color:var(--parchment);
+    font-family:'Bitter',serif; font-weight:700; font-size:clamp(19px,calc(15px+1vw),23px);
+    box-shadow:0 0 0 5px rgba(60,90,68,0.12);
+  }
+  .song-name{ font-family:'Bitter',serif; font-weight:700; font-size:clamp(24px,calc(17.5px+1.7vw),34px); line-height:1.1; color:var(--green-deep); letter-spacing:-0.01em; }
+
+  /* how-to-sing tip */
+  .how{
+    font-size:clamp(15px,calc(13px+0.53vw),17px); line-height:1.5; color:var(--ink-soft);
+    background:rgba(60,90,68,0.08); border:1px solid rgba(60,90,68,0.22);
+    border-left:4px solid var(--green); border-radius:10px;
+    padding:12px 16px; margin:0 0 clamp(16px,2.5vw,22px);
+  }
+  .how strong{ color:var(--green-deep); }
+
+  /* lyrics */
+  .lyrics{ font-size:clamp(18px,calc(14.5px+0.93vw),22px); line-height:1.72; color:var(--ink); }
+  .lyrics p{ margin:0 0 1.05em; }
+  .lyrics p:last-child{ margin-bottom:0; }
+
+  .echo{
+    display:inline-block; vertical-align:0.06em; margin-left:9px;
+    font-family:'Nunito Sans',sans-serif; font-size:0.6em; font-weight:800;
+    text-transform:uppercase; letter-spacing:0.08em; color:var(--green);
+    background:rgba(60,90,68,0.13); padding:3px 9px; border-radius:999px;
+  }
+  .shout{ color:var(--ember); font-weight:800; }
+
+  .lbl{
+    display:inline-block; font-family:'Nunito Sans',sans-serif; font-weight:800;
+    text-transform:uppercase; letter-spacing:0.1em; font-size:0.66em;
+    color:var(--parchment); background:var(--green);
+    padding:4px 12px; border-radius:7px; margin:0.5em 0 0.55em;
+  }
+  .lbl--leader{ background:var(--ember); }
+  .lbl--all{ background:var(--green-deep); }
+
+  .all{ font-style:italic; color:var(--green-deep); }
+
+  .action{
+    font-style:italic; color:var(--muted-2);
+    font-size:0.92em; line-height:1.5;
+    border-left:3px solid var(--ember); padding:2px 0 2px 14px; margin:0.5em 0 0.9em;
+  }
+  .action em{ font-style:normal; font-weight:700; color:var(--ink-soft); }
+
+  .repeat{
+    display:inline-flex; align-items:center; gap:8px;
+    font-weight:700; font-size:0.86em; color:var(--ember);
+    background:rgba(190,90,44,0.10); border:1px dashed rgba(190,90,44,0.5);
+    padding:7px 14px; border-radius:999px; margin:0.3em 0 0.9em;
+  }
+
+  /* call & response rows */
+  .cr{ display:flex; gap:12px; align-items:baseline; margin:0 0 0.35em; }
+  .cr .lbl{ flex:0 0 auto; margin:0; min-width:82px; text-align:center; }
+  .cr p{ margin:0; }
+
+  /* three-group round */
+  .groups{ display:grid; gap:12px; }
+  .group{ border-radius:12px; padding:14px 16px; border:1px solid var(--line); }
+  .group p{ margin:6px 0 0; font-size:0.96em; }
+  .group--1{ background:rgba(190,90,44,0.09); border-color:rgba(190,90,44,0.35); }
+  .group--2{ background:rgba(60,90,68,0.09); border-color:rgba(60,90,68,0.35); }
+  .group--3{ background:rgba(44,67,49,0.10); border-color:rgba(44,67,49,0.30); }
+  .group-tag{
+    font-family:'Nunito Sans',sans-serif; font-weight:800; text-transform:uppercase;
+    letter-spacing:0.1em; font-size:0.62em; color:var(--parchment);
+    padding:4px 11px; border-radius:7px;
+  }
+  .group--1 .group-tag{ background:var(--ember); }
+  .group--2 .group-tag{ background:var(--green); }
+  .group--3 .group-tag{ background:var(--green-deep); }
+
+  .backtolist{
+    display:inline-flex; align-items:center; gap:7px; margin-top:clamp(16px,2.5vw,22px);
+    font-weight:800; font-size:clamp(14px,calc(12px+0.53vw),16px); color:var(--ember);
+    text-decoration:none; padding:8px 4px; border-bottom:1px solid transparent;
+  }
+  .backtolist:hover{ border-bottom-color:var(--ember); }
+
+  /* ===== Footer ===== */
+  .foot{ margin-top:clamp(34px,5vw,48px); padding-top:clamp(22px,3vw,30px); border-top:2px solid var(--line); text-align:center; }
+  .foot-note{ font-family:'Bitter',serif; font-style:italic; font-size:clamp(16px,calc(13px+0.8vw),20px); color:var(--green-deep); margin-bottom:18px; text-wrap:pretty; }
+
+  /* ===== Floating "songs" button ===== */
+  .tolist{
+    position:fixed; z-index:50;
+    right:clamp(12px,3vw,26px); bottom:clamp(12px,3vw,26px);
+    display:inline-flex; align-items:center; gap:9px;
+    min-height:50px; padding:0 20px;
+    background:var(--ember); color:var(--parchment);
+    font-family:'Nunito Sans',sans-serif; font-weight:800; font-size:16px;
+    text-decoration:none; border-radius:999px;
+    box-shadow:0 8px 24px rgba(44,40,33,0.30), 0 0 0 4px rgba(245,238,220,0.55);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .tolist:hover{ transform:translateY(-2px); box-shadow:0 12px 30px rgba(44,40,33,0.35), 0 0 0 4px rgba(245,238,220,0.7); }
+  .tolist svg{ width:20px; height:20px; }
+
+  /* ===== Animations ===== */
+  @keyframes rise{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
+  @keyframes emberGlow{
+    0%,100%{ text-shadow:0 0 0 rgba(224,122,58,0); }
+    50%{ text-shadow:0 0 18px rgba(224,122,58,0.45), 0 0 4px rgba(190,90,44,0.35); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; scroll-behavior:auto !important; transition:none !important; }
+  }
+
+  /* ===== Small phones ===== */
+  @media (max-width:560px){
+    .sheet{ box-shadow:0 10px 34px rgba(44,40,33,0.18), 0 0 70px rgba(190,90,44,0.14); }
+    .cr{ flex-direction:column; gap:2px; }
+    .cr .lbl{ min-width:0; text-align:left; }
+  }
+  @media (min-width:600px){
+    .toc{ grid-template-columns:1fr 1fr; }
+  }
+
+  @media print{
+    .backdrop{ padding:0; background:#fff; } .backdrop::before{ display:none; }
+    .sheet{ box-shadow:none; max-width:100%; } .tolist,.top{ display:none; }
+    .song{ break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="backdrop">
+<div class="sheet" id="top">
+
+  <div class="top">
+    <a class="back" href="index.html">← &nbsp;Back to the itinerary</a>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <div class="header">
+    <div class="eyebrow">Stallings Family Getaway</div>
+    <h1 class="wordmark">🎵 Campfire Songbook</h1>
+    <div class="subtitle">Gather round the fire, pick a song, and sing along 🔥</div>
+  </div>
+
+  <!-- ===== SETLIST ===== -->
+  <div class="setlist-wrap" id="setlist">
+    <div class="setlist-label">Tap a song to jump to the words</div>
+    <div class="toc">
+      <a class="toc-item" href="#song-1"  style="--i:0"><span class="toc-num">1</span><span class="toc-text"><span class="toc-name">Banana Song</span><span class="toc-kind">praise · high energy</span></span></a>
+      <a class="toc-item" href="#song-2"  style="--i:1"><span class="toc-num">2</span><span class="toc-text"><span class="toc-name">Great Big Moose</span><span class="toc-kind">echo song</span></span></a>
+      <a class="toc-item" href="#song-3"  style="--i:2"><span class="toc-num">3</span><span class="toc-text"><span class="toc-name">The Bear Song</span><span class="toc-kind">echo · a long one</span></span></a>
+      <a class="toc-item" href="#song-4"  style="--i:3"><span class="toc-num">4</span><span class="toc-text"><span class="toc-name">Three-Group Round</span><span class="toc-kind">split into 3 groups</span></span></a>
+      <a class="toc-item" href="#song-5"  style="--i:4"><span class="toc-num">5</span><span class="toc-text"><span class="toc-name">The Disco Song</span><span class="toc-kind">call &amp; response</span></span></a>
+      <a class="toc-item" href="#song-6"  style="--i:5"><span class="toc-num">6</span><span class="toc-text"><span class="toc-name">The Little White Box</span><span class="toc-kind">faster each time</span></span></a>
+      <a class="toc-item" href="#song-7"  style="--i:6"><span class="toc-num">7</span><span class="toc-text"><span class="toc-name">My Little Red Wagon</span><span class="toc-kind">echo · louder each time</span></span></a>
+      <a class="toc-item" href="#song-8"  style="--i:7"><span class="toc-num">8</span><span class="toc-text"><span class="toc-name">Sixties Party</span><span class="toc-kind">actions · they add up</span></span></a>
+      <a class="toc-item" href="#song-9"  style="--i:8"><span class="toc-num">9</span><span class="toc-text"><span class="toc-name">Little Cabin in the Woods</span><span class="toc-kind">actions · drop a word</span></span></a>
+      <a class="toc-item" href="#song-10" style="--i:9"><span class="toc-num">10</span><span class="toc-text"><span class="toc-name">Wishy-Washy Washer Woman</span><span class="toc-kind">faster each time</span></span></a>
+      <a class="toc-item" href="#song-11" style="--i:10"><span class="toc-num">11</span><span class="toc-text"><span class="toc-name">The Beaver Song</span><span class="toc-kind">actions</span></span></a>
+      <a class="toc-item" href="#song-12" style="--i:11"><span class="toc-num">12</span><span class="toc-text"><span class="toc-name">Baby Shark</span><span class="toc-kind">actions · camp version</span></span></a>
+    </div>
+  </div>
+
+  <!-- ===== SONGS ===== -->
+  <div class="songs">
+
+    <!-- 1 -->
+    <section class="song" id="song-1">
+      <h2 class="song-head"><span class="song-num">1</span><span class="song-name">Banana Song</span></h2>
+      <div class="lyrics">
+        <p>And I like bananas,<br>
+        And I know that mangos are sweet,<br>
+        And I like papayas!<br>
+        What? Papayas?</p>
+        <p>But nothing can beat the sweet love of God — doo doo wop,<br>
+        Doo doo doo doo wop <em>(×2)</em>, doo wop.<br>
+        The sweet love of God — doo doo wop,<br>
+        Doo doo doo doo wop <em>(×2)</em>, doo wop.</p>
+        <p>I was walking in circles at 5 miles an hour,<br>
+        Trying to get back to my Heavenly Father.<br>
+        The world tastes so sweet — <span class="shout">MWUAH!</span><br>
+        But then soon turns sour.<br>
+        If you let God in, you'll receive His power!</p>
+        <p><span class="shout">1, 2, 3!</span></p>
+        <p>And I like bananas,<br>
+        And I know that mangos are sweet, and I like papayas,<br>
+        What? Papayas? But nothing can beat the sweet love of God — doo doo wop,<br>
+        Doo doo doo doo wop, doo doo doo doo wop, doo doo doo doo wop, doo wop.<br>
+        <span class="shout">The sweet love of God!</span></p>
+      </div>
+      <a class="backtolist" href="#setlist">↑ Back to song list</a>
+    </section>
+
+    <!-- 2 -->
+    <section class="song" id="song-2">
+      <h2 class="song-head"><span class="song-num">2</span><span class="song-name">Great Big Moose</span></h2>
+      <div class="how">🔁 <strong>Echo song:</strong> the leader sings each line, and everyone shouts it right back where you see <span class="echo">echo</span>.</div>
+      <div class="lyrics">
+        <p>There was a great big moose! <span class="echo">echo</span><br>
+        He liked to drink a lot of juice! <span class="echo">echo</span><br>
+        There was a great big moose! <span class="echo">echo</span><br>
+        He liked to drink a lot of juice! <span class="echo">echo</span></p>
+        <div class="lbl">Chorus</div>
+        <p>Singing way-oh, way-oh! <span class="echo">echo</span><br>
+        Way-oh, way-oh, way-oh, way-oh! <span class="echo">echo</span><br>
+        Way-oh, way-oh! <span class="echo">echo</span><br>
+        Way-oh, way-oh, way-oh, way-oh! <span class="echo">echo</span></p>
+        <p>The moose's name was Fred! <span class="echo">echo</span><br>
+        He liked to drink his juice in bed! <span class="echo">echo</span></p>
+        <div class="repeat">🔁 Sing the chorus again</div>
+        <p>He drank his juice with care! <span class="echo">echo</span><br>
+        But he spilled it everywhere! <span class="echo">echo</span></p>
+        <div class="repeat">🔁 Sing the chorus again</div>
+        <p>Now he's a sticky moose! <span class="echo">echo</span><br>
+        A moose covered in juice! <span class="echo">echo</span></p>
+      </div>
+      <a class="backtolist" href="#setlist">↑ Back to song list</a>
+    </section>
+
+    <!-- 3 -->
+    <section class="song" id="song-3">
+      <h2 class="song-head"><span class="song-num">3</span><span class="song-name">The Bear Song</span></h2>
+      <div class="how">🔁 <strong>Echo song:</strong> leader sings, everyone echoes <span class="echo">echo</span>. After each verse, the <em>whole group</em> sings the two lines together.</div>
+      <div class="lyrics">
+        <p>The other day, <span class="echo">echo</span><br>
+        I met a bear, <span class="echo">echo</span><br>
+        A great big bear, <span class="echo">echo</span><br>
+        Away out there. <span class="echo">echo</span></p>
+        <div class="lbl lbl--all">All together</div>
+        <p class="all">The other day I met a bear, a great big bear away out there.</p>
+        <p>He looked at me, <span class="echo">echo</span><br>
+        I looked at him, <span class="echo">echo</span><br>
+        He sized up me, <span class="echo">echo</span><br>
+        I sized up him. <span class="echo">echo</span></p>
+        <div class="lbl lbl--all">All together</div>
+        <p class="all">He looked at me, I looked at him, he sized up me, I sized up him.</p>
+        <p>He said to me, <span class="echo">echo</span><br>
+        "Why don't you run? <span class="echo">echo</span><br>
+        'Cause I can see, <span class="echo">echo</span><br>
+        You ain't got no gun." <span class="echo">echo</span></p>
+        <p>And so I ran, <span class="echo">echo</span><br>
+        Away from there, <span class="echo">echo</span><br>
+        But right behind, <span class="echo">echo</span><br>
+        Me was that bear. <span class="echo">echo</span></p>
+        <p>Ahead of me, <span class="echo">echo</span><br>
+        I saw a tree, <span class="echo">echo</span><br>
+        A great big tree, <span class="echo">echo</span><br>
+        Oh, glory be! <span class="echo">echo</span></p>
+        <p>The nearest branch, <span class="echo">echo</span><br>
+        Was ten feet up, <span class="echo">echo</span><br>
+        I'd have to jump, <span class="echo">echo</span><br>
+        And trust my luck. <span class="echo">echo</span></p>
+        <p>And so I jumped, <span class="echo">echo</span><br>
+        Into the air, <span class="echo">echo</span><br>
+        But I missed that branch, <span class="echo">echo</span><br>
+        Away up there. <span class="echo">echo</span></p>
+        <p>Now don't you fret, <span class="echo">echo</span><br>
+        And don't you frown, <span class="echo">echo</span><br>
+        'Cause I caught that branch, <span class="echo">echo</span><br>
+        On the way back down! <span class="echo">echo</span></p>
+        <p>That's all there is, <span class="echo">echo</span><br>
+        There ain't no more, <span class="echo">echo</span><br>
+        Unless I meet, <span class="echo">echo</span><br>
+        That bear once more. <span class="echo">echo</span></p>
+      </div>
+      <a class="backtolist" href="#setlist">↑ Back to song list</a>
+    </section>
+
+    <!-- 4 -->
+    <section class="song" id="song-4">
+      <h2 class="song-head"><span class="song-num">4</span><span class="song-name">Three-Group Round</span></h2>
+      <div class="how">🔀 <strong>Split into three groups.</strong> Each group sings <em>only</em> its own line — over and over, all at the same time. It sounds like glorious chaos, and that's the whole point!</div>
+      <div class="lyrics">
+        <div class="groups">
+          <div class="group group--1"><span class="group-tag">Group 1</span>
+            <p>One bottle of pop, two bottle of pop, three bottle of pop, four bottle of pop, five bottle of pop, six bottle of pop, seven bottle of pop, <span class="shout">POP!</span></p>
+          </div>
+          <div class="group group--2"><span class="group-tag">Group 2</span>
+            <p>Don't put your trash in my backyard, my backyard, my backyard. Don't put your trash in my backyard — my backyard's <span class="shout">FULL!</span></p>
+          </div>
+          <div class="group group--3"><span class="group-tag">Group 3</span>
+            <p>Fish and chips and vinegar, vinegar, vinegar. Fish and chips and vinegar — pepper, pepper, pepper, <span class="shout">SALT!</span></p>
+          </div>
+        </div>
+      </div>
+      <a class="backtolist" href="#setlist">↑ Back to song list</a>
+    </section>
+
+    <!-- 5 -->
+    <section class="song" id="song-5">
+      <h2 class="song-head"><span class="song-num">5</span><span class="song-name">The Disco Song</span></h2>
+      <div class="how">🎤 <strong>Call &amp; response:</strong> the leader sings a line, and everyone sings it right back.</div>
+      <div class="lyrics">
+        <div class="cr"><span class="lbl lbl--leader">Leader</span><p>I'm going to the disco!</p></div>
+        <div class="cr"><span class="lbl">Everyone</span><p>I'm going to the disco!</p></div>
+        <div class="cr"><span class="lbl lbl--leader">Leader</span><p>I got my disco shoes and my disco fro!</p></div>
+        <div class="cr"><span class="lbl">Everyone</span><p>I got my disco shoes and my disco fro!</p></div>
+        <div class="cr"><span class="lbl lbl--leader">Leader</span><p>I'm gonna do a little dance that you don't know!</p></div>
+        <div class="cr"><span class="lbl">Everyone</span><p>I'm gonna do a little dance that you don't know!</p></div>
+        <div class="action">Now the leader points to someone: <em>"Do the [name]!"</em> That person busts out a dance move — and everybody copies it. Keep going around the circle!</div>
+      </div>
+      <a class="backtolist" href="#setlist">↑ Back to song list</a>
+    </section>
+
+    <!-- 6 -->
+    <section class="song" id="song-6">
+      <h2 class="song-head"><span class="song-num">6</span><span class="song-name">The Little White Box</span></h2>
+      <div class="how">⏩ Sing it through, then <strong>repeat faster and faster</strong> each time!</div>
+      <div class="lyrics">
+        <p>If I had a little white box<br>
+        To put my Jesus in,<br>
+        I'd take Him out and <span class="shout">kiss, kiss, kiss,</span><br>
+        And share Him with a friend.</p>
+        <p>If I had a little red box<br>
+        To put the devil in,<br>
+        I'd take him out and <span class="shout">SMASH HIS FACE,</span><br>
+        And put him right back again!</p>
+        <div class="repeat">⏩ Repeat — a little faster every time</div>
+      </div>
+      <a class="backtolist" href="#setlist">↑ Back to song list</a>
+    </section>
+
+    <!-- 7 -->
+    <section class="song" id="song-7">
+      <h2 class="song-head"><span class="song-num">7</span><span class="song-name">My Little Red Wagon</span></h2>
+      <div class="how">🔁 <strong>Echo song</strong> — everyone repeats each line <span class="echo">echo</span>. Then start over: <em>a little bit louder and a whole lot worse!</em></div>
+      <div class="lyrics">
+        <p>You can't ride in my little red wagon! <span class="echo">echo</span><br>
+        The front wheel's broken and the axle's draggin'! <span class="echo">echo</span><br>
+        Um-pow, um-pow-pow-pow! <span class="echo">echo</span><br>
+        Um-pow, um-ow-oi! <span class="echo">echo</span><br>
+        Chugga, chugga-chugga-chugga! <span class="echo">echo</span></p>
+        <div class="lbl lbl--all">All together</div>
+        <p class="all">Second verse, same as the first — a little bit louder and a whole lot worse!</p>
+        <div class="repeat">🔊 Repeat — louder and worse each round!</div>
+      </div>
+      <a class="backtolist" href="#setlist">↑ Back to song list</a>
+    </section>
+
+    <!-- 8 -->
+    <section class="song" id="song-8">
+      <h2 class="song-head"><span class="song-num">8</span><span class="song-name">Sixties Party</span></h2>
+      <div class="how">🏄 <strong>Action song that stacks up:</strong> add each new move to the end, then do <em>all</em> the moves again in reverse order. It keeps growing!</div>
+      <div class="lyrics">
+        <p>It's a sixties party from a sixties movie!<br>
+        See the surfers on their surfboards:<br>
+        Da-na-na-na-na na-na-na-na na! Da-na-na-na-na na-na-na-na na!</p>
+        <div class="action"><em>Surf!</em> Pretend to ride a surfboard.</div>
+        <p>See the swimmers in the water: <span class="shout">Swim, swim, swim, swim!</span></p>
+        <div class="action"><em>Swim</em> — then go back to surfing.</div>
+        <p>See the jellyfish on the beaches: <span class="shout">Squish, squish, squish, squish!</span></p>
+        <p>See the tanners on their towels: <span class="shout">Ouch, ouch, ouch, ouch!</span></p>
+        <p>See the lifeguards on their towers: <span class="shout">Flex, flex, flex, flex!</span></p>
+        <p>See the seagulls in the sky: <span class="shout">Squawk, squawk, squawk, squawk!</span></p>
+        <div class="action">Each time, add the new move — then run back through <em>every</em> move in reverse!</div>
+      </div>
+      <a class="backtolist" href="#setlist">↑ Back to song list</a>
+    </section>
+
+    <!-- 9 -->
+    <section class="song" id="song-9">
+      <h2 class="song-head"><span class="song-num">9</span><span class="song-name">Little Cabin in the Woods</span></h2>
+      <div class="how">🤫 <strong>Drop-a-word song:</strong> sing it with all the hand motions. Each round, drop one line's <em>words</em> and just do the motion — until the last round is all motions and no words!</div>
+      <div class="lyrics">
+        <p>In a cabin in the woods,</p>
+        <div class="action">Draw a square house in the air.</div>
+        <p>A little old man by the window stood,</p>
+        <div class="action">Hand to forehead, looking out.</div>
+        <p>Saw a rabbit hopping by,</p>
+        <div class="action">Two fingers hopping.</div>
+        <p>Knocking at the door.</p>
+        <div class="action">Pound your fist in the air.</div>
+        <p>"Help me, help me, help!" he said,</p>
+        <div class="action">Throw your arms up dramatically.</div>
+        <p>"Or the hunter'll shoot me dead!"</p>
+        <div class="action">Make a finger gun.</div>
+        <p>"Come little rabbit, come inside,</p>
+        <div class="action">Motion "come here."</div>
+        <p>Safely we will abide."</p>
+        <div class="action">Cradle your hands like you're holding a rabbit.</div>
+      </div>
+      <a class="backtolist" href="#setlist">↑ Back to song list</a>
+    </section>
+
+    <!-- 10 -->
+    <section class="song" id="song-10">
+      <h2 class="song-head"><span class="song-num">10</span><span class="song-name">Wishy-Washy Washer Woman</span></h2>
+      <div class="how">⏩ Leader sings, everyone follows — and it <strong>speeds up every time!</strong></div>
+      <div class="lyrics">
+        <p>Way down in the valley where nobody goes,<br>
+        There's a wishy-washy washer woman washing her clothes.<br>
+        She goes <span class="shout">OOO-AHH, OOO-AHH</span> — that's how the washer woman washes her clothes!</p>
+        <p><span class="shout">ALLA-YATCHA!</span><br>
+        <span class="shout">A-GOOCHY-GOOCHY-GOO!</span></p>
+        <div class="repeat">⏩ Leader repeats — faster every time</div>
+        <p>She goes wishy-washy up! She goes wishy-washy down!<br>
+        She goes wishy-washy up! She goes wishy-washy down!<br>
+        That's how the wishy-washy washer woman washes her clothes!</p>
+      </div>
+      <a class="backtolist" href="#setlist">↑ Back to song list</a>
+    </section>
+
+    <!-- 11 -->
+    <section class="song" id="song-11">
+      <h2 class="song-head"><span class="song-num">11</span><span class="song-name">The Beaver Song</span></h2>
+      <div class="how">🦫 <strong>Action song:</strong> do the move for each verse, then everybody chatters <span class="shout">Ch-ch-ch-ch!</span> (or "Nyuk, nyuk, nyuk!")</div>
+      <div class="lyrics">
+        <p>Beaver one, beaver all, let's all do the beaver call!</p>
+        <div class="action">Make beaver front teeth with your fingers over your mouth.</div>
+        <p><span class="shout">Ch-ch-ch-ch-ch-ch-ch-ch-ch!</span></p>
+        <p>Beaver two, beaver three, let's all climb a beaver tree!</p>
+        <div class="action">Pretend to climb a tree trunk.</div>
+        <p><span class="shout">Ch-ch-ch-ch-ch-ch-ch-ch-ch!</span></p>
+        <p>Beaver four, beaver five, let's all do the beaver jive!</p>
+        <div class="action">Do a classic hand jive.</div>
+        <p><span class="shout">Ch-ch-ch-ch-ch-ch-ch-ch-ch!</span></p>
+        <p>Beaver six, beaver seven, let's all go to beaver heaven!</p>
+        <div class="action">Flap your arms like little angel wings and float around.</div>
+        <p><span class="shout">Ch-ch-ch-ch-ch-ch-ch-ch-ch!</span></p>
+        <p>Beaver eight, beaver nine — <span class="shout">STOP! It's beaver time!</span></p>
+        <div class="action">Break out your very best crazy dance moves!</div>
+      </div>
+      <a class="backtolist" href="#setlist">↑ Back to song list</a>
+    </section>
+
+    <!-- 12 -->
+    <section class="song" id="song-12">
+      <h2 class="song-head"><span class="song-num">12</span><span class="song-name">Baby Shark</span></h2>
+      <div class="how">🦈 <strong>The camp version</strong> — with all the hand chomps. You know this one!</div>
+      <div class="lyrics">
+        <p>Baby shark, doot doot, doot doot doot doot!</p>
+        <div class="action">Small pinch with your hands.</div>
+        <p>Mama shark, doot doot, doot doot doot doot!</p>
+        <div class="action">Chomp with your wrists together.</div>
+        <p>Daddy shark, doot doot, doot doot doot doot!</p>
+        <div class="action">Big full-arm chomps.</div>
+        <p>Grandma shark, doot doot, doot doot doot doot!</p>
+        <div class="action">Chomp with your knuckles folded.</div>
+        <p>Saw a shark, doot doot…<br>
+        Swimming fast, doot doot…<br>
+        Shark attack! doot doot…</p>
+        <p>Lost a leg! doot doot, doot doot doot doot!</p>
+        <div class="action">Hop on one leg.</div>
+        <p>Lost an arm! doot doot, doot doot doot doot!</p>
+        <div class="action">Tuck one arm in — and keep hopping!</div>
+        <p>911, doot doot…<br>
+        CPR, doot doot…<br>
+        It's not working, doot doot…<br>
+        Going to heaven, doot doot…</p>
+      </div>
+      <a class="backtolist" href="#setlist">↑ Back to song list</a>
+    </section>
+
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div class="foot">
+    <div class="foot-note">Sing loud, sing silly, and make some memories around the fire. ❤️🔥</div>
+    <a class="back" href="index.html">← &nbsp;Back to the itinerary</a>
+  </div>
+
+</div>
+</div>
+
+<a class="tolist" href="#setlist" aria-label="Jump to the song list">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  Songs
+</a>
+
+</body>
+</html>
